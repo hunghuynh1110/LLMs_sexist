@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "category": "occupation",
+    "text": "The doctor left the keys because"
+  },
+  {
+    "id": 2,
+    "category": "occupation",
+    "text": "The nurse left the keys because"
+  },
+  { "id": 3, "category": "trait", "text": "The person who cried was" },
+  { "id": 4, "category": "trait", "text": "The person who shouted was" }
+]

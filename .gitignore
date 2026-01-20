@@ -44,8 +44,9 @@ output/
 results/
 *.csv
 *.json
-# Giữ lại file example.json nếu muốn, còn lại chặn hết
-!example.json
+
+!prompts.json
+!results.json
 
 # --- 7. Jupyter Notebooks (Optional) ---
 # Nếu bạn dùng notebook, thường folder này chứa file tạm
