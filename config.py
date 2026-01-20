@@ -1,33 +1,16 @@
-import torch
+# config.py
 
-# Tên mô hình (Dùng bản Instruct 8B cho nhẹ)
-MODEL_ID = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+# 1. Cấu hình Model
+# Khi nào chạy thật trên Cluster thì đổi thành bản 70B ở đây
+MODEL_ID = "meta-llama/Meta-Llama-3.1-8B-Instruct" 
 
-def get_device_settings():
-    """
-    Trả về thiết bị (device) và cấu hình quantization phù hợp.
-    """
-    # 1. Kiểm tra nếu là UQ Cluster (NVIDIA GPU)
-    if torch.cuda.is_available():
-        from transformers import BitsAndBytesConfig
-        print(">> [Config] Phát hiện: NVIDIA GPU (CUDA)")
-        device = "cuda"
-        # Cấu hình nén 4-bit (Chỉ dùng cho NVIDIA)
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_quant_type="nf4"
-        )
-        return device, bnb_config
+# 2. Cấu hình Đường dẫn file
+INPUT_FILE = "prompts.json"
+OUTPUT_FILE = "results.json"
 
-    # 2. Kiểm tra nếu là MacBook (Apple Silicon)
-    elif torch.backends.mps.is_available():
-        print(">> [Config] Phát hiện: Apple Silicon (MPS)")
-        device = "mps"
-        # Mac không dùng bitsandbytes, trả về None
-        return device, None
-    
-    # 3. Trường hợp CPU (Dự phòng)
-    else:
-        print(">> [Config] Cảnh báo: Chỉ dùng CPU")
-        return "cpu", None
+# 3. Cấu hình tham số chạy
+TOP_K = 10      # Lấy top 10 token có xác suất cao nhất
+DEVICE_MAP = "auto"
+
+# 4. Token (Nếu muốn để ở đây thay vì login thủ công - Tùy chọn)
+# HF_TOKEN = "hf_xxxx..."
