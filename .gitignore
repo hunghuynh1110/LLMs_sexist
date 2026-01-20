@@ -1,0 +1,52 @@
+# --- 1. Python & Virtual Environment ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.venv/
+.env
+
+# --- 2. Mac OS (Rất quan trọng cho Mac M4 của bạn) ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- 3. IDE Settings (VS Code, PyCharm...) ---
+.vscode/
+.idea/
+*.swp
+
+# --- 4. AI/ML Models & Data (CHẶN FILE NẶNG) ---
+# Chặn các file trọng số model (Weights) để không up lên Git
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.gguf
+*.h5
+
+# Chặn thư mục chứa model nếu bạn tải về local
+models/
+checkpoints/
+data/
+datasets/
+
+# --- 5. Hugging Face specific ---
+.cache/
+hf_cache/
+
+# --- 6. Logs & Outputs ---
+*.log
+output/
+results/
+*.csv
+*.json
+# Giữ lại file example.json nếu muốn, còn lại chặn hết
+!example.json
+
+# --- 7. Jupyter Notebooks (Optional) ---
+# Nếu bạn dùng notebook, thường folder này chứa file tạm
+.ipynb_checkpoints/
