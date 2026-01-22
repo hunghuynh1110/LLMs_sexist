@@ -10,4 +10,4 @@ OUTPUT_FILE = "results.json"
 
 # 3. Tham số chạy
 TOP_K = 10
-# HF_TOKEN = "..." # (Không bắt buộc nếu đã login trên Colab)
+HF_TOKEN = "" # (Không bắt buộc nếu đã login trên Colab)

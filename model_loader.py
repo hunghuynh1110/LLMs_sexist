@@ -4,15 +4,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import config
 
 def load_model_and_tokenizer(model_path=config.MODEL_PATH):
-    # KIỂM TRA NGUỒN MODEL
-    if os.path.exists(model_path):
-        print(f">> [Loader] ✅ Tìm thấy Model trên Google Drive: {model_path}")
-        print(">> Đang tải từ ổ cứng (Sẽ rất nhanh)...")
-        load_source = model_path
-    else:
-        print(f">> [Loader] ⚠️ Không tìm thấy thư mục: {model_path}")
-        print(f">> [Loader] 🔄 Chuyển sang tải từ Hugging Face (Sẽ tốn thời gian)...")
-        load_source = config.HF_MODEL_ID
+    print(f">> [Loader] Đang chuẩn bị tải model: {model_path}")
+    load_source = model_path
 
     # BẮT ĐẦU TẢI
     try:
@@ -32,7 +25,7 @@ def load_model_and_tokenizer(model_path=config.MODEL_PATH):
                 load_source,
                 quantization_config=bnb_config,
                 device_map="auto",
-                local_files_only=True if os.path.exists(model_path) else False 
+                # local_files_only=True if os.path.exists(model_path) else False 
                 # ^ Dòng trên ép buộc dùng file local nếu đường dẫn tồn tại
             )
             device = "cuda"

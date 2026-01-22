@@ -49,11 +49,36 @@ def main():
     # 1. Đăng nhập (Dùng token từ Config hoặc biến môi trường)
     print(">> [Init] Đang kiểm tra đăng nhập...")
     try:
-        # Ưu tiên lấy từ config nếu có, nếu không thì để Colab tự lo (đã login ở cell ngoài)
-        if hasattr(config, 'HF_TOKEN') and config.HF_TOKEN:
-            login(token=config.HF_TOKEN)
-    except Exception as e:
-        print(f">> [Warning] Không đăng nhập qua Config được ({e}). Hy vọng bạn đã login ở ngoài.")
+    # Ưu tiên lấy từ config nếu có, nếu không thì để Colab tự lo (đã login ở cell ngoài)
+    token = None
+    
+    # 1. Check Config
+    if hasattr(config, 'HF_TOKEN') and config.HF_TOKEN:
+        token = config.HF_TOKEN
+        print(">> [Login] Sử dụng token từ config.py")
+        
+    # 2. Check Environment Variable
+    if not token and os.environ.get("HF_TOKEN"):
+        token = os.environ.get("HF_TOKEN")
+        print(">> [Login] Sử dụng token từ biến môi trường")
+
+    # 3. Check Google Colab Secrets
+    if not token:
+        try:
+            from google.colab import userdata
+            token = userdata.get('HF_TOKEN')
+            print(">> [Login] Sử dụng token từ Colab Secrets")
+        except:
+            pass
+
+    if token:
+        try:
+            login(token=token)
+            print(">> [Login] Đăng nhập thành công!")
+        except Exception as e:
+            print(f">> [Error] Token không hợp lệ: {e}")
+    else:
+        print(">> [Warning] Không tìm thấy HF_TOKEN. Hy vọng bạn đã login bằng 'huggingface-cli login' hoặc đang chạy local đã lưu credentials.")
 
     # 2. Chuẩn bị dữ liệu
     if not os.path.exists(config.INPUT_FILE):
